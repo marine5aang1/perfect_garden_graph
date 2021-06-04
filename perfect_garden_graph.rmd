@@ -1,0 +1,90 @@
+---
+title: "Perfect Garden Graph Week 1"
+author: "Alex Ang"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    df_print: paged
+    code_download: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
+library(tidyverse)        
+library(lubridate)         
+library(remotes)
+
+library(gardenR)
+theme_set(theme_minimal())  
+```
+
+```{r data}
+# load the garden data 
+data(garden_harvest)
+```
+
+Explain the question you hope to answer and create the graph below in the Graph 1 section. For the first week, you may not have the skills quite yet to create exactly what you want to create - that's ok! Get as close as you can, and I'll give you feedback to help you out. You can summarize the data in any way you'd like. Add R code chunks and comment code as needed. As the weeks go by, you will continue to build on this file by putting new code in the next Graph sections. You will keep all the old code, add my feedback by copying and pasting it from moodle (found in the Grade section of moodel), and make improvements from my suggestions and from other ideas you have. Having the old code and graphs and my feedback will help you (and I) easily see the progress throughout the course.
+
+## Graph Week 1
+
+**Question I hope to answer: What was the most harvested vegetable by weight in Lisa's garden in the year 2020?** 
+
+```{r}
+garden_harvest %>%
+  ggplot(aes(y=weight, x=vegetable)) + 
+  geom_boxplot() + 
+  theme(axis.text.x = element_text(angle = 45)) +
+  labs(x="type of vegetable", y="weight(grams)", title="Harvested Vegatables By Weight In 2020")
+```
+**Summary of the data:**
+
+According to the boxplots, potatoes were the most harvested vegetable since the boxplot is the highest out of all the vegetables by far. Also the range of our potatoes data is higher compared to the vegetables. 
+
+Lisa's feedback: (copy the feedback from moodle here)
+
+Great start! Flip your axes so vegetable is on the y axis. Incorporate the x and y axis names into the title and then omit those labels. Reorder the boxplot from largest to smallest median harvest.
+
+## Graph Week 2
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Lisa's feedback: (copy the feedback from moodle here)
+
+## Graph Week 3
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Lisa's feedback: (copy the feedback from moodle here)
+
+## Graph Week 4
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Lisa's feedback: (copy the feedback from moodle here)
+
+## Graph Week 5
+
+Question I hope to answer: (probably the same as previous week but may change slightly)
+
+```{r}
+
+```
+
+Lisa's feedback: (copy the feedback from moodle here)
+
