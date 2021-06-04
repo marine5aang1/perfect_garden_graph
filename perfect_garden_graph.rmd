@@ -48,13 +48,26 @@ Lisa's feedback: (copy the feedback from moodle here)
 
 Great start! Flip your axes so vegetable is on the y axis. Incorporate the x and y axis names into the title and then omit those labels. Reorder the boxplot from largest to smallest median harvest.
 
+
 ## Graph Week 2
 
-Question I hope to answer: (probably the same as previous week but may change slightly)
+**Question I hope to answer: From the data that we extrapolated last week, we will look at the most harvested vegetable, which is the potato. What was the most harvested variety of potato by weight (lbs) in 2020?** 
 
 ```{r}
-
+garden_harvest %>%
+  filter(vegetable=="potatoes") %>%
+  mutate(variety=factor(variety, levels=c("purple","red", "yellow", "Russet"))) %>%
+  mutate(weight_lbs=weight*0.00220462) %>%
+  group_by(variety) %>%
+  summarize(variety_weight=sum(weight_lbs)) %>%
+  ggplot(aes(x=variety_weight, y=variety)) +
+  geom_col() + 
+  labs(x="", y="", title= "Most Harvested Variety of Potato by Weight (lbs) in 2020")
+  
 ```
+
+According to our graph, we can see that the most harvested variety of potato in all of 2020 was the Russet potato. 
+
 
 Lisa's feedback: (copy the feedback from moodle here)
 
