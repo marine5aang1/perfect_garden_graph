@@ -40,6 +40,7 @@ garden_harvest %>%
   theme(axis.text.x = element_text(angle = 45)) +
   labs(x="type of vegetable", y="weight(grams)", title="Harvested Vegatables By Weight In 2020")
 ```
+
 **Summary of the data:**
 
 According to the boxplots, potatoes were the most harvested vegetable since the boxplot is the highest out of all the vegetables by far. Also the range of our potatoes data is higher compared to the vegetables. 
@@ -69,15 +70,25 @@ garden_harvest %>%
 According to our graph, we can see that the most harvested variety of potato in all of 2020 was the Russet potato. 
 
 
-Lisa's feedback: (copy the feedback from moodle here)
+Lisa's feedback: I want you to keep building on the same graph each week - not making an entirely new one. In the end, you might combine these two graphs, but let's focus on the one from week one. Go back and make the changes I suggested there and capitalize the first letter of each vegetable using a str_XXX() function.
 
 ## Graph Week 3
 
-Question I hope to answer: (probably the same as previous week but may change slightly)
+**Question I hope to answer: 
 
 ```{r}
-
+garden_harvest %>%
+  mutate(wght_lbs=weight*0.00220462) %>% 
+  group_by(vegetable) %>%
+  summarize(total_wght=sum(wght_lbs)) %>%
+  mutate(capital=str_to_title(vegetable)) %>%
+  mutate(vegetable2=fct_reorder(capital, total_wght)) %>%
+  ggplot(aes(y=vegetable2, x=total_wght)) + 
+  geom_col() + 
+  labs(x="", y="", title="Harvested Vegatables By Total Weight (lbs) In 2020")
 ```
+
+Summary of graph: After totaling the weights for each vegetable, we can see that the tomatoes were the most harvested in 2020. 
 
 Lisa's feedback: (copy the feedback from moodle here)
 
