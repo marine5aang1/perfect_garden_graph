@@ -21,6 +21,10 @@ library(remotes)
 library(gardenR)
 theme_set(theme_minimal())  
 library(ggthemes)
+library(plotly) 
+library(gganimate)
+library(gifski)
+library(transformr)
 ```
 
 ```{r data}
@@ -123,15 +127,43 @@ garden_harvest %>%
 Summary of graph: There doesn't seem to be a correlation between total weight of harvested vegetables and total days they were harvested. 
 
 
-Lisa's feedback: (copy the feedback from moodle here)
+Lisa's feedback: This looks so nice! Move the title all the way to the left using plot.title.position = "plot" inside theme(). Add more vertical gridlines using the breaks argument in scale_x_continuous - I think at the 50's would be good.
+
 
 ## Graph Week 5
 
-Question I hope to answer: (probably the same as previous week but may change slightly)
+Question I hope to answer: How does it vary within months of the year? 
+
 
 ```{r}
+perfect_garden_graph <- garden_harvest %>%
+  mutate(wght_lbs=weight*0.00220462) %>% 
+  mutate(month=format(date, "%m")) %>%
+  group_by(month, vegetable) %>%
+  summarize(total_wght=sum(wght_lbs),
+            total_days_harv=n_distinct(date)) %>%
+  ungroup() %>%
+  mutate(capital=str_to_title(vegetable)) %>%
+  mutate(vegetable2=fct_reorder(capital,
+                                total_wght)) %>%
+  ggplot(aes(y=vegetable2,
+             x=total_wght,
+             fill=total_days_harv)) + 
+
+  scale_x_continuous(expand=c(0,0), breaks=c(0,50,100,150,200,250,300,350)) +
+  geom_col(width=0.6, position=position_dodge(width=0.5)) + 
+  labs(x="", y="", title="Harvested Vegatables By Total Weight (lbs) In 2020", fill="Total Days Harvested", subtitle = "month: {closest_state}")+
+  theme_fivethirtyeight() + 
+  theme(panel.grid.major.y = element_blank(),
+        axis.text.y = element_text(size=8),
+        title = element_text(size=11), 
+        plot.title.position="plot") + 
+  
+  transition_states(month, transition_length=2, state_length = 3) + 
+  exit_fade()
+
+animate(perfect_garden_graph, duration=20)
+anim_save("perfect_garden_graph.gif")
 
 ```
-
-Lisa's feedback: (copy the feedback from moodle here)
 
